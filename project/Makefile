@@ -22,10 +22,8 @@ install: libLcd.a
 clean:
 	rm -f libLcd.a *.o *.elf
 
-drawings.elf: main.o libLcd.a stateMachines.o wdt_handler.o p2_interrupt_handler.o switches.o 
+drawings.elf: main.o libLcd.a wdt_handler.o p2_interrupt_handler.o switches.o 
 	${CC} ${CFLAGS} ${LDFLAGS} -o $@ $^ -lTimer -lLcd 
 
 load: drawings.elf
 	msp430loader.sh $^
-
-main.c: switches.h

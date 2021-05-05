@@ -1,8 +1,11 @@
 #include <msp430.h>
+#include <libTimer.h>
 #include "switches.h"
 #include "stateMachines.h"
 
-char switch1_state_down, switch2_state_down, switch3_state_down, switch4_state_down, switch_state_changed; /* effectively boolean */
+char switch1_state_down, switch2_state_down, switch3_state_down, switch4_state_down, switch_state_changed, switch_state_down; /* effectively boolean */
+
+short redrawScreen;
 
 static char 
 switch_update_interrupt_sense()
@@ -33,7 +36,10 @@ switch_interrupt_handler()
   switch2_state_down = (p2val & SW2) ? 0 : 1; /* 0 when SW2 is up */
   switch3_state_down = (p2val & SW3) ? 0 : 1; /* 0 when SW3 is up */
   switch4_state_down = (p2val & SW4) ? 0 : 1; /* 0 when SW4 is up */
-  
+
   switch_state_changed = 1;
-  state_advance();
+  
+  switch_state_down = switch1_state_down || switch2_state_down || switch3_state_down;
+
+  if(switch_state_down) redrawScreen = 1;
 }
