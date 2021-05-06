@@ -3,5 +3,6 @@
 
 
 u_int changeScreen(u_int bgColor);
+void stateMachine();
 
 #endif

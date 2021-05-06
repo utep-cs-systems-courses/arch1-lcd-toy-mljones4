@@ -6,13 +6,15 @@
 #define SW3 BIT2
 #define SW4 BIT3
 
+#include "lcdutils.h"
+
 #define SWITCHES (SW4 | SW3 | SW2 | SW1)
 
 void switch_init();
 void switch_interrupt_handler();
 
-extern char switch1_state_down, switch2_state_down, switch3_state_down, switch4_state_down, switch_state_changed; /* effectively boolean */
+extern char switch1_state_down, switch2_state_down, switch3_state_down, switch4_state_down, switch_state_changed;
 
-extern char switch_state_down;
+extern u_int switch_state; /* effectively boolean */
 
 #endif // included
