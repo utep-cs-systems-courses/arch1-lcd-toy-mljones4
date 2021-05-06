@@ -3,12 +3,13 @@
 #include "switches.h"
 #include "lcdutils.h"
 #include "lcddraw.h"
+#include "aFunctions.h"
 
 #define LED_GREEN BIT6
 
 u_char width = screenWidth, height = screenHeight;
-int deltaCpattern[8] = {1,-1,0,0,-1,1,0,0}, deltaRpattern[8] = {0,0,-1,1,0,0,1,-1};
-int deltaC = 1, deltaR = 0;
+int deltaCpattern[8] = {1,-1,0,0,-1,1,0,0}, deltaRpattern[8] = {0,0,-1,1,0,0,1,-1}, deltaC = 1, deltaR = 0;
+u_int bgColor = 0x3666;
 u_char originC = screenWidth/2 - 20, originR = screenHeight/2 - 6;
 short redrawScreen = 0, animationState = 0;
 
@@ -56,9 +57,9 @@ int main()
   or_sr(0x8);
 
   while(1){
-   
+    
     if(switch1_state_down){
-      clearScreen(COLOR_CYAN);
+      bgColor = changeScreen(bgColor);
       animationState = 0;
       
       fillRectangle(40,40, 50, 70, COLOR_RED);

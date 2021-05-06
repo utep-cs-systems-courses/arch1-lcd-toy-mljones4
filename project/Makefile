@@ -2,7 +2,7 @@ all: libLcd.a drawings.elf
 
 CPU             = msp430g2553
 CFLAGS          = -mmcu=${CPU} -Os -I../h 
-LDFLAGS 	= -L../lib -L/opt/ti/msp430_gcc/include -L../lib 
+LDFLAGS 	= -L/opt/ti/msp430_gcc/include -L../lib 
 #switch the compiler (for the internal make rules)
 CC              = msp430-elf-gcc
 AS              = msp430-elf-gcc -mmcu=${CPU} -c
@@ -22,8 +22,10 @@ install: libLcd.a
 clean:
 	rm -f libLcd.a *.o *.elf
 
-drawings.elf: main.o libLcd.a wdt_handler.o p2_interrupt_handler.o switches.o 
+drawings.elf: main.o aFunctions.o libLcd.a wdt_handler.o p2_interrupt_handler.o switches.o 
 	${CC} ${CFLAGS} ${LDFLAGS} -o $@ $^ -lTimer -lLcd 
 
 load: drawings.elf
 	msp430loader.sh $^
+
+aFunctions.o: aFunctions.s aFunctions.h
